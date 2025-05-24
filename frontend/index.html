@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Lens</title>
+    <link rel="stylesheet" href="/frontend/style.css">
+</head>
+
+<body>
+    <div class="main-layout">
+        <!-- Left side: webcam video -->
+        <div class="video-panel">
+            <h2>🎥 Webcam Feed</h2>
+            <video id="video" autoplay muted playsinline></video>
+            <div class="controls">
+                <label>
+                    <input type="checkbox" id="faceRecognition" checked>
+                    Face Recognition
+                </label>
+            </div>
+        </div>
+
+        <!-- Right side: summary -->
+        <div class="summary-panel">
+            <h2>🧠 Live Summary</h2>
+            <div id="summary" class="summary-content">Initializing camera...</div>
+            <div id="status" class="status-text" style="display: none;">⏳ Analyzing...</div>
+        </div>
+    </div>
+
+    <script src="/frontend/script.js"></script>
+</body>
+
+</html>

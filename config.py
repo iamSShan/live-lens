@@ -37,7 +37,7 @@ class Config:
     MAX_LENGTH = 512
 
     # Model Specific Settings
-    CURRENT_MODEL = "qwen"  # Other options are: gpt-4o
+    CURRENT_MODEL = "smolvlm"  # Other options are: gpt-4o, paligemma, qwen
 
     # OpenAI GPT-4o
     AZURE_OPENAI_ENDPOINT = ""  # Add your Azure endpoint

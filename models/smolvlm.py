@@ -8,6 +8,7 @@ from transformers import (
 from PIL import Image
 from typing import Dict, Any, Optional
 from .base_model import BaseVisionModel
+from face_recognition import recognize_faces_and_generate_prompt
 from config import Config
 import logging
 
@@ -65,12 +66,17 @@ class SmolVLMModel(BaseVisionModel):
 
         try:
             # Default prompt for scene description
-            if prompt is None:
-                # prompt = "Describe what you see in this image in detail, including people, objects, activities, and the overall scene."
-                prompt = (
-                    "Describe this image in detail: <image> Include information about people, objects, "
-                    "activities, setting, and any notable features."
-                )
+            # if prompt is None:
+            #     # prompt = "Describe what you see in this image in detail, including people, objects, activities, and the overall scene."
+            #     prompt = (
+            #         "Describe this image in detail: <image> Include information about people, objects, "
+            #         "activities, setting, and any notable features."
+            #     )
+
+            # Recognize faces and generate a personalized prompt
+            image, generated_prompt = recognize_faces_and_generate_prompt(image)
+            prompt = prompt or generated_prompt
+
             # Prepare inputs
             inputs = self.processor(
                 text=[prompt],  # Wrap in list

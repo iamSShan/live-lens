@@ -1,0 +1,78 @@
+#################################### For macOS ####################################
+
+macOS should be able to install dlib without too many problems if the dependencies are handled correctly
+
+
+Steps:
+1. Install Homebrew (if you don’t have it yet):
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+2. Install cmake and boost:
+
+    brew install cmake boost
+
+3. Install dlib using pip:
+    pip install dlib
+
+4. Verify installation in Python:
+    import dlib
+    print(dlib.__version__)
+
+
+
+#################################### For Windows ####################################
+
+Windows requires additional setup due to the need for C++ build tools and a compiler
+
+Steps:
+
+1. Download and install the Visual Studio Build Tools from here: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+
+  - During installation, select C++ build tools and Windows SDK.
+  - Ensure that Desktop development with C++ is selected.
+
+2. Download and install cmake from here: https://cmake.org/download/
+
+3. Install dlib using pip:
+    pip install dlib
+
+4. Alternative: Use Precompiled Binaries:
+
+  - If the above steps fail (due to the complexity of compiling), you can download precompiled dlib wheels from an unofficial source like this GitHub repo: https://github.com/z-mahmud22/Dlib_Windows_Python3.x
+
+  - Download the appropriate .whl file based on your Python version and architecture (e.g., cp39 for Python 3.9).
+
+  - Install the .whl file using pip:
+
+    pip install path/to/downloaded/dlib.whl
+
+5. Verify installation, in python:
+
+
+    import dlib
+    print(dlib.__version__)
+
+
+
+#################################### For Linux (Ubuntu/Debian) ####################################
+
+Linux users (especially on Ubuntu/Debian) can follow these steps to install dlib
+
+Steps:
+1. Install Dependencies:
+
+You need cmake, boost, and other essential tools. On Ubuntu/Debian-based systems, you can install them via apt.
+
+    sudo apt update
+    sudo apt install cmake g++ wget
+    sudo apt install libboost-all-dev
+
+2. Install dlib using pip:
+
+    pip install dlib
+
+3. Verify installation, in python:
+
+    import dlib
+    print(dlib.__version__)

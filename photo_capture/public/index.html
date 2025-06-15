@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Capture</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- SweetAlert2 CSS -->
+  <!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.all.min.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <div id="app">
+      <h2>Capture Your Photo</h2>
+      
+      <!-- Webcam Video Preview -->
+    <div class="webcam-container">
+      <video id="webcam" autoplay playsinline></video>
+      <img id="captured-photo" alt="Captured photo" style="display: none;" />
+      <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+
+      <!-- Input Section -->
+      <div class="input-section">
+        <label for="username">Enter Your Name:</label>
+        <input type="text" id="username" placeholder="Your Name" />
+        <span id="error-message"></span>
+      </div>
+<!-- Photo Preview Section - now only contains buttons -->
+<div id="photo-preview" style="display: none;">
+  <h3>Is this photo fine?</h3>
+  <div class="buttons">
+    <button id="retake-btn" class="btn">Retake</button>
+    <button id="save-btn" class="btn">Save</button>
+  </div>
+</div>
+
+      <!-- Capture Button -->
+      <button id="capture-btn" class="btn">Capture Photo</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  
+</body>
+</html>

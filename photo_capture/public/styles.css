@@ -1,0 +1,231 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px; /* Increased from 600px */
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.webcam-container {
+  width: 100%;
+  height: 600px; /* Increased from 400px */
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#webcam {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  visibility: visible;
+  transition: visibility 0.3s ease;
+}
+
+#captured-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+#canvas {
+  display: none;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 28px; /* Increased font size */
+}
+
+h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+/* Input Section */
+.input-section {
+  width: 100%;
+  margin: 30px 0; /* Increased margin */
+  text-align: center;
+}
+
+label {
+  font-size: 18px;
+  color: #333;
+  font-weight: 500;
+}
+
+input[type="text"] {
+  padding: 15px;
+  font-size: 18px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 15px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #6c63ff;
+}
+
+#error-message {
+  color: red;
+  margin-top: 8px;
+  display: block;
+  font-size: 14px;
+}
+
+/* Capture Button */
+.btn {
+  padding: 15px 30px;
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 25px;
+  font-size: 18px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+
+}
+#capture-btn {
+  margin: 0 auto;
+  display: block;
+
+}
+
+.btn:hover {
+  background-color: #5a53cc;
+}
+
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Photo Preview */
+#photo-preview {
+  display: none;
+  text-align: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.buttons {
+  margin-top: 25px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.buttons .btn {
+  width: auto;
+  min-width: 150px;
+  margin: 0;
+}
+
+/* Tablet adjustments */
+@media screen and (max-width: 900px) {
+  .container {
+    max-width: 700px;
+    padding: 25px;
+  }
+  
+  .webcam-container {
+    height: 500px;
+  }
+  
+  h2 {
+    font-size: 24px;
+  }
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .webcam-container {
+    height: 400px;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buttons .btn {
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"] {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+/* Very small screens */
+@media screen and (max-width: 400px) {
+  .webcam-container {
+    height: 300px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+}

@@ -10,34 +10,15 @@ class Config:
 
     # API Keys
     OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
     GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "")
     HUGGINGFACE_TOKEN = os.environ.get("HUGGINGFACE_TOKEN", "")
 
-    # Model configurations
+    # Model names
     SMOLVLM_MODEL_NAME = "HuggingFaceTB/SmolVLM-Instruct"
     QWEN_MODEL_NAME = "Qwen/Qwen2-VL-2B-Instruct"
-
-    # File paths
-    FACE_DATA_DIR = "data/faces"
-    FACE_ENCODINGS_PATH = "models/face_encodings.pkl"
-    FINE_TUNED_MODELS_DIR = "models/fine_tuned"
-
-    # Server settings
-    HOST = "0.0.0.0"
-    PORT = 8000
-
-    # Vision settings
-    MAX_IMAGE_SIZE = (800, 600)
-    FACE_RECOGNITION_TOLERANCE = 0.6
-
-    # Fine-tuning settings
-    LEARNING_RATE = 5e-5
-    BATCH_SIZE = 4
-    EPOCHS = 3
-    MAX_LENGTH = 512
-
-    # Model Specific Settings
-    CURRENT_MODEL = "smolvlm"  # Other options are: gpt-4o, paligemma, qwen
+    PALIGEMMA_MODEL_NAME = "google/paligemma-3b-mix-224"
+    GEMINI_MODEL_NAME = "gemini-1.5-flash-002"
 
     # OpenAI GPT-4o
     AZURE_OPENAI_ENDPOINT = ""  # Add your Azure endpoint
@@ -45,26 +26,15 @@ class Config:
     AZURE_OPENAI_MODEL_NAME = "gpt-4o"
     AZURE_OPENAI_API_VERSION = "2024-12-01-preview"
 
-    # GPT4_SETTINGS = {
-    #     "max_tokens": int(os.environ.get("GPT4_MAX_TOKENS", "500")),
-    #     "temperature": float(os.environ.get("GPT4_TEMPERATURE", "0.7")),
-    #     "model": os.environ.get("GPT4_MODEL", "gpt-4o"),
-    # }
+    # Current model in use
+    CURRENT_MODEL = (
+        "gemini"  # Other options are: `gpt-4o`, `paligemma`, `qwen` and `smolvlm`
+    )
 
-    GEMINI_SETTINGS = {
-        "max_tokens": int(os.environ.get("GEMINI_MAX_TOKENS", "500")),
-        "temperature": float(os.environ.get("GEMINI_TEMPERATURE", "0.7")),
-        "model": os.environ.get("GEMINI_MODEL", "gemini-2.0-flash-exp"),
-    }
+    # File paths
+    FACE_DATA_DIR = "./faces"
+    FACE_ENCODINGS_PATH = "./face_encodings.pkl"
 
-    SMOLVLM_SETTINGS = {
-        "max_tokens": int(os.environ.get("SMOLVLM_MAX_TOKENS", "500")),
-        "temperature": float(os.environ.get("SMOLVLM_TEMPERATURE", "0.7")),
-        "model": os.environ.get("SMOLVLM_MODEL", "HuggingFaceTB/SmolVLM-Instruct"),
-    }
-
-    QWEN_SETTINGS = {
-        "max_tokens": int(os.environ.get("QWEN_MAX_TOKENS", "500")),
-        "temperature": float(os.environ.get("QWEN_TEMPERATURE", "0.7")),
-        "model": os.environ.get("QWEN_MODEL", "Qwen/Qwen2-VL-7B-Instruct"),
-    }
+    # Server settings
+    HOST = "0.0.0.0"
+    PORT = 8000

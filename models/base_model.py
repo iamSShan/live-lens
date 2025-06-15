@@ -20,15 +20,15 @@ class BaseVisionModel(ABC):
 
     @abstractmethod
     def generate_description(
-        self, image: Image.Image, prompt: Optional[str] = None
+        self, images: List[Image.Image], recognize_faces: bool = True
     ) -> str:
-        """Generate description for the given image"""
+        """Generate description for the given image(s), with optional face recognition"""
         pass
 
-    @abstractmethod
-    def fine_tune(self, dataset_path: str, **kwargs) -> Dict[str, Any]:
-        """Fine-tune the model on custom dataset"""
-        pass
+    # @abstractmethod
+    # def fine_tune(self, dataset_path: str, **kwargs) -> Dict[str, Any]:
+    #     """Fine-tune the model on custom dataset"""
+    #     pass
 
     def unload_model(self) -> None:
         """Unload model to free memory"""

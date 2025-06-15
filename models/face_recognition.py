@@ -1,65 +1,118 @@
 from PIL import Image, ImageDraw
 import face_recognition
 import os
+import numpy as np
+from typing import Dict, Any, List
+import logging
+import pickle
+
+logger = logging.getLogger(__name__)
 
 
-def recognize_faces_and_generate_prompt(
-    image: Image.Image, known_faces_dir="data/faces"
-) -> (Image.Image, str):
-    """
-    Recognize known people in the image and generate a descriptive prompt for VLM.
-    """
-    image_np = face_recognition.load_image_file(image.fp)
+class FaceRecognitionManager:
+    """Handles face recognition and encoding management"""
 
-    # Detect and encode faces in the uploaded image
-    face_locations = face_recognition.face_locations(image_np)
-    face_encodings = face_recognition.face_encodings(image_np, face_locations)
+    def __init__(self, encodings_path: str = "face_encodings.pkl"):
+        self.encodings_path = encodings_path
+        self.known_face_encodings = []
+        self.known_face_names = []
+        self.load_encodings()
 
-    # Load known faces from disk
-    known_encodings = []
-    known_names = []
-    for person_name in os.listdir(known_faces_dir):
-        person_dir = os.path.join(known_faces_dir, person_name)
-        if not os.path.isdir(person_dir):
-            continue
-        for img_file in os.listdir(person_dir):
-            img_path = os.path.join(person_dir, img_file)
-            try:
-                known_img = face_recognition.load_image_file(img_path)
-                encoding = face_recognition.face_encodings(known_img)
-                if encoding:
-                    known_encodings.append(encoding[0])
-                    known_names.append(person_name)
-            except Exception:
-                continue
+    def load_encodings(self):
+        """Load pre-computed face encodings from file"""
+        try:
+            if os.path.exists(self.encodings_path):
+                with open(self.encodings_path, "rb") as f:
+                    data = pickle.load(f)
+                    self.known_face_encodings = data["encodings"]
+                    self.known_face_names = data["names"]
+                logger.info(f"Loaded {len(self.known_face_names)} face encodings")
+            else:
+                logger.warning(f"No encodings file found at {self.encodings_path}")
+        except Exception as e:
+            logger.error(f"Error loading face encodings: {e}")
 
-    identified_names = []
-    name_map = {}
+    def save_encodings(self):
+        """Save face encodings to file"""
+        try:
+            data = {
+                "encodings": self.known_face_encodings,
+                "names": self.known_face_names,
+            }
+            with open(self.encodings_path, "wb") as f:
+                pickle.dump(data, f)
+            logger.info("Face encodings saved successfully")
+        except Exception as e:
+            logger.error(f"Error saving face encodings: {e}")
 
-    # Match faces
-    for (top, right, bottom, left), encoding in zip(face_locations, face_encodings):
-        matches = face_recognition.compare_faces(known_encodings, encoding)
-        name = "an unknown person"
-        if True in matches:
-            match_index = matches.index(True)
-            name = known_names[match_index]
-        name_map[(top, right, bottom, left)] = name
-        identified_names.append(name)
+    def add_person(self, image_path: str, person_name: str):
+        """Add a new person to the recognition database"""
+        try:
+            image = face_recognition.load_image_file(image_path)
+            encodings = face_recognition.face_encodings(image)
 
-    # Annotate image (optional)
-    draw = ImageDraw.Draw(image)
-    for (top, right, bottom, left), name in name_map.items():
-        draw.rectangle(((left, top), (right, bottom)), outline="green", width=2)
-        draw.text((left, top - 10), name, fill="green")
+            if encodings:
+                self.known_face_encodings.append(encodings[0])
+                self.known_face_names.append(person_name)
+                self.save_encodings()
+                logger.info(f"Added {person_name} to face recognition database")
+                return True
+            else:
+                logger.warning(f"No face found in image for {person_name}")
+                return False
+        except Exception as e:
+            logger.error(f"Error adding person {person_name}: {e}")
+            return False
 
-    # Generate personalized prompt
-    if identified_names:
-        prompt = (
-            "Describe what is happening in this image using the names of the individuals. "
-            "Here are the people identified: " + ", ".join(set(identified_names)) + ". "
-            "Use their names naturally in the description."
-        )
-    else:
-        prompt = "Describe what is happening in this image, including people, objects, and actions."
+    def recognize_faces(self, image: Image.Image) -> List[Dict[str, Any]]:
+        """Recognize faces in the given image"""
+        try:
+            # Convert PIL Image to numpy array
+            image_array = np.array(image)
 
-    return image, prompt
+            # Find face locations and encodings
+            face_locations = face_recognition.face_locations(image_array)
+            face_encodings = face_recognition.face_encodings(
+                image_array, face_locations
+            )
+
+            recognized_faces = []
+
+            for (top, right, bottom, left), face_encoding in zip(
+                face_locations, face_encodings
+            ):
+                # Compare with known faces
+                matches = face_recognition.compare_faces(
+                    self.known_face_encodings, face_encoding, tolerance=0.6
+                )
+                name = "Unknown"
+                confidence = 0.0
+
+                # Find the best match
+                if True in matches:
+                    face_distances = face_recognition.face_distance(
+                        self.known_face_encodings, face_encoding
+                    )
+                    best_match_index = np.argmin(face_distances)
+                    if matches[best_match_index]:
+                        name = self.known_face_names[best_match_index]
+                        confidence = 1 - face_distances[best_match_index]
+
+                recognized_faces.append(
+                    {
+                        "name": name,
+                        "confidence": confidence,
+                        "location": {
+                            "top": top,
+                            "right": right,
+                            "bottom": bottom,
+                            "left": left,
+                        },
+                    }
+                )
+
+            return recognized_faces
+
+        except Exception as e:
+            logger.error(f"Error recognizing faces: {e}")
+            return []

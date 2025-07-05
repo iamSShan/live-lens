@@ -82,7 +82,7 @@ Edit config.py to modify:
 
 ## ⚡ Extra Note: 
 
-> If you're using **OpenAI GPT-4** directly instead of **Azure GPT-4**, make sure to use `openai_without_azure.py` instead of `openai_model.py`. Set your OpenAI API key in .env file too.
+> If you're using **OpenAI GPT-4** directly instead of **Azure GPT-4**, make sure to comment out few things in `openai_model.py` file. Also. set your OpenAI API key in .env file too.
 
 
 ## 🛠️ Setup

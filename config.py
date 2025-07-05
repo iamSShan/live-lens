@@ -8,6 +8,8 @@ load_dotenv()
 class Config:
     """Application configuration"""
 
+    VIDEO_SOURCE = "webcam"  # Other option is `video`
+
     # API Keys
     OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
     GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -21,10 +23,10 @@ class Config:
     GEMINI_MODEL_NAME = "gemini-1.5-flash-002"
 
     # OpenAI GPT-4o
-    AZURE_OPENAI_ENDPOINT = ""  # Add your Azure endpoint
+    AZURE_OPENAI_ENDPOINT = ""  # Add your Azure endpoint if using Azure OpenAI
     AZURE_OPENAI_DEPLOYMENT = "gpt-4o"
     AZURE_OPENAI_MODEL_NAME = "gpt-4o"
-    AZURE_OPENAI_API_VERSION = "2024-12-01-preview"
+    AZURE_OPENAI_API_VERSION = ""  # Add your version if using Azure OpenAI
 
     # Current model in use
     CURRENT_MODEL = (

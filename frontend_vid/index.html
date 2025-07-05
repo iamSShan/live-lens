@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Lens</title>
+    <link rel="stylesheet" href="/frontend_vid/style.css">
+</head>
+
+<body>
+    <div class="main-layout">
+        <!-- Left side: video feed -->
+        <div class="video-panel">
+            <h2>🎥 Video Feed</h2>
+            <video id="video" autoplay muted playsinline controls></video> <!-- added controls here -->
+            <div class="controls">
+                <label>
+                    <input type="checkbox" id="faceRecognition" checked>
+                    Face Recognition
+                </label>
+            </div>
+            <!-- Add a file input to select a video -->
+            <input type="file" id="videoFile" accept="video/*">
+        </div>
+
+        <!-- Right side: summary -->
+        <div class="summary-panel">
+            <h2>🧠 Live Summary</h2>
+            <div id="summary" class="summary-content">Initializing video...</div>
+            <div id="status" class="status-text" style="display: none;">⏳ Analyzing...</div>
+        </div>
+    </div>
+
+    <script src="/frontend_vid/script.js"></script>
+</body>
+
+</html>

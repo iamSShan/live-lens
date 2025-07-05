@@ -40,8 +40,16 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+video_source = Config.VIDEO_SOURCE.lower()  # "webcam" or "video"
+
+
 # Mount the frontend directory to serve static files
-app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
+if video_source == "webcam":
+    app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
+else:
+    app.mount(
+        "/frontend_vid", StaticFiles(directory="frontend_vid"), name="frontend_vid"
+    )
 
 # Global reference to the current vision model
 vision_model = None
@@ -84,10 +92,23 @@ async def startup_event():
 @app.get("/", response_class=HTMLResponse)
 async def root():
     """
-    Serve the main HTML page when the root endpoint is accessed.
-    This serves the frontend of the app.
+    Root endpoint that serves the main HTML page for the application.
+    This determines which frontend UI to serve based on the VIDEO_SOURCE setting
+
+    - If VIDEO_SOURCE is set to "webcam", it serves the webcam-based frontend (frontend/index.html).
+    - If VIDEO_SOURCE is set to "video", it serves the video-based frontend (frontend_vid/index.html).
+    - If VIDEO_SOURCE is invalid or not recognized, it returns a 400 Bad Request.
     """
-    return FileResponse("frontend/index.html")
+    if video_source == "webcam":
+        # If we want to summarize through webcam
+        return FileResponse("frontend/index.html")
+    elif video_source == "video":
+        # If we want to summarize video after uploading
+        return FileResponse("frontend_vid/index.html")
+    else:
+        raise HTTPException(
+            status_code=400, detail="Invalid VIDEO_SOURCE configuration."
+        )
 
 
 @app.post("/analyze", response_model=ModelResponse)

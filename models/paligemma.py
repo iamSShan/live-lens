@@ -64,45 +64,6 @@ class PaliGemmaVisionModel(BaseVisionModel):
             logger.error(f"Error loading PaliGemma model: {str(e)}")
             raise
 
-    # def generate_description(
-    #     self, images: List[Image.Image], prompt: Optional[str] = None
-    # ) -> str:
-    #     """
-    #     Generate description for the given image using PaliGemma
-    #     """
-    #     if not self.is_loaded:
-    #         print("Model was not loaded, loading it now")
-    #         self.load_model()
-
-    #     try:
-    #         # Filter out best image out of all frames
-    #         best_image = select_best_frame(images)
-    #         image = preprocess_for_model(best_image)
-
-    #         if prompt is None:
-    #             prompt = (
-    #                 "<image> Describe this image in detail. Include information about people, objects, "
-    #                 "activities, setting, and any notable features. Be specific and comprehensive."
-    #             )
-
-    #         inputs = self.processor(text=prompt, images=image, return_tensors="pt").to(
-    #             self.device
-    #         )
-
-    #         generated_ids = self.model.generate(**inputs, max_new_tokens=200, do_sample=True,
-    #                             top_p=0.9,temperature=0.7)
-    #         generated_text = self.processor.batch_decode(
-    #             generated_ids, skip_special_tokens=True
-    #         )[0]
-    #         # Remove prompt text if it's echoed at the start
-    #         if generated_text.startswith(prompt[7:]):
-    #             generated_text = generated_text[len(prompt[7:]):].strip()
-    #         return generated_text.strip()
-
-    #     except Exception as e:
-    #         logger.error(f"Error generating description with PaliGemma: {str(e)}")
-    #         return f"Error: Unable to generate description - {str(e)}"
-
     def generate_description(
         self, images: List[Image.Image], recognize_faces: bool = True
     ) -> str:

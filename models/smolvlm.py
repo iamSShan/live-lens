@@ -2,8 +2,6 @@ import torch
 from transformers import (
     AutoModelForVision2Seq,
     AutoProcessor,
-    # TrainingArguments,
-    # Trainer,
 )
 from PIL import Image
 from typing import Dict, Any, Optional, List
@@ -12,7 +10,7 @@ from .base_model import BaseVisionModel
 # from face_recognition import recognize_faces_and_generate_prompt
 from config import Config
 import logging
-from transformers import AutoConfig, AutoModelForVision2Seq
+from transformers import AutoModelForVision2Seq
 from .utils import (
     apply_transformers_fix,
     preprocess_for_model,
@@ -85,19 +83,6 @@ class SmolVLMModel(BaseVisionModel):
                     # Create context about recognized people
                     person_context = create_single_image_person_context(faces, image)
 
-            print(person_context)
-            # if person_context:
-            #     prompt = (
-            #             f"<image> {person_context} Describe this image in a natural, conversational tone by mentioning identified people"
-            #             f"Focus on what the identified people are doing, their expressions, and how they "
-            #             f"interact with the environment and each other."
-            #         )
-
-            # else:
-            #      prompt = (
-            #             "Describe this <image> image in detail. Include information about people, objects, "
-            #             "activities, setting, and any notable features. Be specific and comprehensive."
-            #         )
             if person_context:
                 prompt = f"<image> {person_context} What do you see in this image? Please use names of identified people."
             else:

@@ -166,7 +166,11 @@ live-lens/
 │   └──extra_func.py            # Some extra functions which are not getting used right now
 ├── photo_capture/              # Web app for face registration
 ├── frontend/
-│   ├── index.html              # Main HTML page
+│   ├── index.html              # Main HTML page for webcam based summarization
+│   ├── script.js               # JavaScript for frontend logic
+│   └── style.css               # CSS styles
+├── frontend_vid/
+│   ├── index.html              # Main HTML page for uploaded video summarization
 │   ├── script.js               # JavaScript for frontend logic
 │   └── style.css               # CSS styles
 ├── utils/

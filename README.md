@@ -5,17 +5,40 @@ It is a real-time web application for webcam-based visual analysis powered by cu
 
 ### 🖼️ Frontend Layout
 
-[picture here]
 
 
-## 🌟 Features
 
-* Real-time webcam analysis with multiple vision models
-* Model comparison - Switch between different vision models
-* Auto-analysis mode for continuous monitoring
-* Modern web interface with real-time updates
-* Modular design for easy integration of new models  
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Demo video](utils/demo.gif)
+
+## 💡 Features
+
+* Real-time Webcam Analysis: Analyzes live webcam input to detect actions, identify people by name, and generate meaningful scene summaries using advanced AI models.
+* Multi-Model Vision Support: Easily switch between different computer vision models to compare performance and results
+* Intelligent Person Identification: Recognizes and labels known individuals by name using facial recognition or custom embeddings.
+* Modern Web Interface: Interactive and responsive frontend with real-time updates, status indicators, and controls.
+* Modular & Extensible Architecture: Plug-and-play support for adding new models or analytics modules with minimal changes.
+* GPU Acceleration Support: Optimized for hardware acceleration with GPU (CUDA) to enable fast inference for demanding models.
 
 ## 🧠 Models used
 
@@ -106,13 +129,12 @@ Create a `.env` file in the root directory and add the necessary API keys:
   ```env
   HUGGINGFACE_TOKEN=your_huggingface_token_here
   ```
-      
+
 ### 4. Enable Face Recognition
 If you want the app to identify the person in the webcam, follow these steps:
 
 - Directly copy your photo into the `./live-lens/faces` folder. Create a folder with your name inside the `faces` folder and paste your image there.
 - Alternatively, you can use the web app I’ve created for face registration.
-
 
 **How to use the web app for face registration**:
 1. Go to `photo_capture` directory and run `npm start`
@@ -141,7 +163,10 @@ In local:
 uvicorn app:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-Open your browser and go to: http://localhost:8000 or http://<your-ip>:3000
+When not running through run.py: Just make sure you have some photo in faces folder and and run `python face_db_builder.py` directly to generate face_encodings.pkl file.
+
+
+To access, open your browser and go to: http://localhost:8000 or http://<your-ip>:3000
 
 ## 📁 Project Structure
 
@@ -195,7 +220,7 @@ Sometimes while installing dlib libary which is used for face recognition may ca
 ## 📈 Performance Tips
 
 * **Use GPU (CUDA):**  
-Models like **SmolVLM**, **Qwen**, and **PaliGemma** support GPU acceleration. If a GPU is available, it will significantly improve inference speed compared to CPU.
+Models like **SmolVLM**, **Qwen**, and **PaliGemma** support GPU acceleration. If a GPU is available, it will significantly improve inference speed compared to CPU. These models are very slow on CPU.
 
 * **Initial Model Download:**  
 The model is downloaded automatically on first use. This may take some time depending on the model size and your internet speed.

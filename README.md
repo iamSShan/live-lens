@@ -5,30 +5,7 @@ It is a real-time web application for webcam-based visual analysis powered by cu
 
 ### 🖼️ Frontend Layout
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(Slowed down the clip to improve text readability)
 ![Demo video](utils/demo.gif)
 
 ## 💡 Features
